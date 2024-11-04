@@ -30,7 +30,7 @@
   ];
 </script>
 
-<BottomNav position="absolute" classInner="grid-cols-5">
+<BottomNav position="fixed" classInner="grid-cols-5">
   <BottomNavItem btnName="Home">
     <a use:route href="/">
       <HomeSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
