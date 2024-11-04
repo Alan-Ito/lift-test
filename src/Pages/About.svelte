@@ -31,9 +31,6 @@
       left: 0;
       right: 0;
     }
-    div#app {
-    overflow: hidden;
-  }
 </style>
 
 <div class="table-container">
