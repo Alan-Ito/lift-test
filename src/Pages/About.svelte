@@ -15,11 +15,21 @@
     let players: Player[] = [];
   
     onMount(async () => {
+    try {
       const response = await fetch(`${import.meta.env.VITE_LARAVEL_API_ENDPOINT}/players`);
+      if (!response.ok) {
+        console.error('response.ok:', response.ok);
+        console.error('esponse.status:', response.status);
+        console.error('esponse.statusText:', response.statusText);
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       players = await response.json();
-    });
+    } catch (error) {
+      console.error('Error fetching players:', error);
+    }
+  });
 
-    console.log(import.meta.env.VITE_LARAVEL_API_ENDPOINT);
+    console.log(`${import.meta.env.VITE_LARAVEL_API_ENDPOINT}/players`);
   </script>
 
 <style>
