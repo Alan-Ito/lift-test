@@ -7,6 +7,9 @@
   import { BottomNav, BottomNavItem, Skeleton, ImagePlaceholder } from 'flowbite-svelte';
   import { HomeSolid, WalletSolid, AdjustmentsVerticalOutline, UserCircleSolid } from 'flowbite-svelte-icons';
   import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
+  import { Button, Indicator } from 'flowbite-svelte';
+
+  import Toast from '../Components/Toast.svelte';
 
   // Importing pages
   import Homepage from './Homepage.svelte';
@@ -14,7 +17,9 @@
   import Settings from './Settings.svelte';
 
   import { onMount } from 'svelte';
-  import echo from '../lib/echo.js';
+  import echo from '../lib/echo';
+
+  import { notifications, notification_list } from '../stores/notifications';
 
   // プレイヤーのインターフェース
   interface Player {
@@ -39,7 +44,11 @@
         console.log('Player added event received:', e);
         const playerData = e.player;
         players = [...players, playerData];
+        notifications.update(n => n + 1);// 通知数を増やす
         console.log('Updated players list:', players);
+        console.log("notifications:", $notifications);
+        // 通知メッセージを追加
+        notification_list.update(n => [...n, { id: Date.now(), message: 'Player added: ' + playerData.name }]);
       });
       // デバッグ用のログ
     echo.connector.pusher.connection.bind('connected', () => {
@@ -64,7 +73,7 @@
     },
     {
       path: "settings",
-      component: Settings
+      component: Settings,
     }
   ];
 </script>
@@ -79,6 +88,8 @@
     right: 0;
   }
 </style>
+
+<Toast />
 
 <div class="table-container">
 <Table striped={true} width=100%>
@@ -120,6 +131,12 @@
     <UserCircleSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
   </BottomNavItem>
   <BottomNavItem btnName="Profile2">
+    {#if $notifications > 0}
+    <Button class="relative" size="sm" style="background: transparent; width: 0; height: 0; padding: 0; border: none;">>
+      <span class="sr-only">Notifications</span>
+      <Indicator color="red" border size="xl" placement="top-right" class="text-xs font-bold">{$notifications}</Indicator>
+    </Button>
+    {/if}
     <UserCircleSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
   </BottomNavItem>
 </BottomNav>
