@@ -1,4 +1,12 @@
-# Svelte + Vite
+# メモ
+
+## アイコン一覧
+
+Solid Icons - Flowbite Svelte Icons
+https://flowbite-svelte.com/icons/solid-icons
+
+<!-- 
+# Svelte+ Vite
 
 This template should help get you started developing with Svelte in Vite.
 
@@ -8,7 +16,7 @@ This template should help get you started developing with Svelte in Vite.
 
 ## Need an official Svelte framework?
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support  for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
 ## Technical considerations
 
@@ -45,3 +53,4 @@ If you have state that's important to retain within a component, consider creati
 import { writable } from 'svelte/store'
 export default writable(0)
 ```
+ -->
