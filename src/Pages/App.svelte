@@ -5,7 +5,7 @@
 
   // Importing UI components
   import { BottomNav, BottomNavItem, Skeleton, ImagePlaceholder } from 'flowbite-svelte';
-  import { HomeSolid, WalletSolid, AdjustmentsVerticalOutline, UserCircleSolid } from 'flowbite-svelte-icons';
+  import { HomeSolid, WalletSolid, AdjustmentsVerticalOutline, UserCircleSolid, UsersGroupSolid, PlayOutline, PlaySolid } from 'flowbite-svelte-icons';
   import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell } from 'flowbite-svelte';
   import { Button, Indicator } from 'flowbite-svelte';
 
@@ -15,6 +15,7 @@
   import Homepage from './Homepage.svelte';
   import About from './About.svelte';
   import Settings from './Settings.svelte';
+  import Match from './Match.svelte';
 
   import { onMount } from 'svelte';
   import echo from '../lib/echo';
@@ -60,7 +61,10 @@
     });
   });
 
-  const query = new QueryString();
+
+  function truncateString(string, max) {
+    return string.length > max ? string.slice(0, max) + '...' : string;
+  }
 
   const routes: Route[] = [
     {
@@ -74,42 +78,19 @@
     {
       path: "settings",
       component: Settings,
+    },
+    {
+      path: "match",
+      component: Match,
     }
   ];
 </script>
 
 <style>
-  .table-container {
-    max-height: calc(100vh - 60px); /* Adjust the height as needed */
-    overflow-y: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
+
 </style>
 
 <Toast />
-
-<div class="table-container">
-<Table striped={true} width=100%>
-  <TableHead>
-    <TableHeadCell>Name</TableHeadCell>
-    <TableHeadCell>Age</TableHeadCell>
-    <TableHeadCell>Position</TableHeadCell>
-  </TableHead>
-  <TableBody tableBodyClass="divide-y">
-      {#each players as player}
-          <TableBodyRow>
-              <TableBodyCell>{player.name}</TableBodyCell>
-              <TableBodyCell>{player.age}</TableBodyCell>
-              <TableBodyCell>{player.position}</TableBodyCell>
-          </TableBodyRow>
-      {/each}
-  </TableBody>
-</Table>
-</div>
-
 
 <BottomNav position="fixed" classInner="grid-cols-5">
   <BottomNavItem btnName="Home">
@@ -117,9 +98,15 @@
       <HomeSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
     </a>
   </BottomNavItem>
-  <BottomNavItem btnName="About">
+  <BottomNavItem btnName="Players">
+    {#if $notifications > 0}
+    <Button class="relative" size="sm" style="background: transparent; width: 0; height: 0; padding: 0; border: none;">>
+      <span class="sr-only">Notifications</span>
+      <Indicator color="red" border size="xl" placement="top-right" class="text-xs font-bold">{$notifications}</Indicator>
+    </Button>
+    {/if}
     <a use:route href="/about">
-      <WalletSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+      <UsersGroupSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
     </a>
   </BottomNavItem>
   <BottomNavItem btnName="Settings">
@@ -127,16 +114,12 @@
       <AdjustmentsVerticalOutline class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
     </a>
   </BottomNavItem>
-  <BottomNavItem btnName="Profile">
-    <UserCircleSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+  <BottomNavItem btnName="Match">
+    <a use:route href="/match">
+    <PlaySolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+    </a>
   </BottomNavItem>
   <BottomNavItem btnName="Profile2">
-    {#if $notifications > 0}
-    <Button class="relative" size="sm" style="background: transparent; width: 0; height: 0; padding: 0; border: none;">>
-      <span class="sr-only">Notifications</span>
-      <Indicator color="red" border size="xl" placement="top-right" class="text-xs font-bold">{$notifications}</Indicator>
-    </Button>
-    {/if}
     <UserCircleSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
   </BottomNavItem>
 </BottomNav>

@@ -19,7 +19,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-        padding: 10px;
         z-index: 9999; /* 高い値を設定して一番手前に表示 */
     }
   </style>
@@ -28,8 +27,8 @@
 <div class="toast-container">
 {#each [...$notification_list] as notification, index (notification.id)}
 <!-- divで囲うとfade inにtransitionを反映できた -->
-<div transition:fly={{ x: 200 }} class="mb-4" style="z-index: 9999;">
-    <Toast transition={fly} params={{ x: 200 }} color="green">
+<div transition:fly={{ x: 200 }} style="z-index: 9999;">
+    <Toast transition={fly} params={{ x: 200 }} color="green" style="margin-bottom:1rem;">
         <UserAddOutline slot="icon" class="w-6 h-6" />
         {notification.message}
     </Toast>
