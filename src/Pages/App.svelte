@@ -16,6 +16,8 @@
   import About from './About.svelte';
   import Settings from './Settings.svelte';
   import Match from './Match.svelte';
+  import Teams from './Teams.svelte';
+  import TeamDetails from "./TeamDetails.svelte";
 
   import { onMount } from 'svelte';
   import echo from '../lib/echo';
@@ -82,6 +84,14 @@
     {
       path: "match",
       component: Match,
+    },
+    {
+      path: "teams",
+      component: Teams,
+    },
+    {
+      path: "teamdetails",
+      component: TeamDetails,
     }
   ];
 </script>
@@ -119,8 +129,10 @@
     <PlaySolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
     </a>
   </BottomNavItem>
-  <BottomNavItem btnName="Profile2">
+  <BottomNavItem btnName="Teams">
+    <a use:route href="/teams">
     <UserCircleSolid class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-500" />
+    </a>
   </BottomNavItem>
 </BottomNav>
 

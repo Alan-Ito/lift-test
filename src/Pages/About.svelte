@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, Badge } from 'flowbite-svelte';
     import { notifications } from '../stores/notifications';
+    import { player_list } from '../stores/players';
   
     interface Player {
       id: number;
@@ -25,8 +26,8 @@
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         players = await response.json();
-        console.log(players);
-        console.log(typeof(players));
+        player_list.update((n) => players);
+        console.log('$player_list:', $player_list);
       } catch (error) {
         console.error('Error fetching players:', error);
       }
@@ -45,7 +46,6 @@
       'Forward': 'FW',
       'Defender': 'DF',
       'Midfielder': 'MF',
-      'Goalkeeper': 'GK'
     };
     return positionMap[position] || position;
   }
@@ -57,7 +57,6 @@
       'FW': 'yellow',
       'DF': 'blue',
       'MF': 'green',
-      'GK': 'purple'
     };
     return positionColorMap[position] || "white";
   }
@@ -77,7 +76,7 @@
 <div class="table-container">
 <Table striped={true} width=100%>
     <TableHead>
-      <TableHeadCell>Name</TableHeadCell>
+      <TableHeadCell>選手名</TableHeadCell>
       <TableHeadCell>Age</TableHeadCell>
       <TableHeadCell>Pos</TableHeadCell>
     </TableHead>
